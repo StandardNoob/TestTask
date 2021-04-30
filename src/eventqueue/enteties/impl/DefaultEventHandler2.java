@@ -9,6 +9,7 @@ public class DefaultEventHandler2 implements EventHandler {
 
 	private Queue<MyEvent> events;
 	private final Object LOCK_OBJECT;
+	private EventsExecutor eventsExecutor;
 
 	{
 		events = new LinkedList<MyEvent>();
@@ -27,28 +28,10 @@ public class DefaultEventHandler2 implements EventHandler {
 
 	@Override
 	public void startHandler() throws Exception {
-		synchronized (LOCK_OBJECT) {
-			while (true) {
-				if (events != null && events.size() > 0) {
-					Thread thread = new Thread(() -> {
-						while (events.size() > 0) {
-							try {
-								MyEvent myEvent = events.poll();
-								myEvent.execute();
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-						Thread.yield();
-					}, "Events Executor");
-					thread.start();
-					thread.join();
-
-				} else {
-					LOCK_OBJECT.wait();
-				}
-			}
-		}
+		eventsExecutor = new EventsExecutor(events, LOCK_OBJECT);
+		Thread thread = new Thread(eventsExecutor, "Events Executor");
+		thread.start();
+		thread.join();
 	}
 
 	@Override

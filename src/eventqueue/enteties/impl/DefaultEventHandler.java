@@ -57,8 +57,9 @@ public class DefaultEventHandler implements EventHandler {
 	public void stopHandler() {
 		synchronized (text) {
 			try {
-				Thread.currentThread().interrupt();
 				System.out.println("DefaultEventHandler was stoped!");
+				System.exit(0);
+
 			} catch (Exception e) {
 				System.out.println("Stop Handler Exception block");
 			}
