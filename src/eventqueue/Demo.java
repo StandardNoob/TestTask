@@ -26,10 +26,8 @@ public class Demo {
 		MyEvent myEvent5 = new MyEvent("My Event 5");
 		TimeUnit.SECONDS.sleep(1);
 
-		System.out.println(System.lineSeparator() + "New Event Added!" + System.lineSeparator());		
+		System.out.println(System.lineSeparator() + "New Event Added!" + System.lineSeparator());
 		eventHandler.addEvent(myEvent5);
-		
-		eventHandler.startHandler();
 
 		eventHandler.stopHandler();
 	}
