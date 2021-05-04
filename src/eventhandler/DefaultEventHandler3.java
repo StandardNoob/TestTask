@@ -18,11 +18,6 @@ public class DefaultEventHandler3 implements EventHandler {
 		threads = new ArrayList<Thread>();
 	}
 
-	public DefaultEventHandler3(Queue<MyEvent> events) {
-		super();
-		this.events = events;
-	}
-
 	public Queue<MyEvent> getEvents() {
 		return events;
 	}
@@ -42,9 +37,7 @@ public class DefaultEventHandler3 implements EventHandler {
 
 	@Override
 	public void stopHandler() throws Exception {
-		Thread eventStopper = new Thread(new EventStopper(threads), "EventStopper");
+		Thread eventStopper = new Thread(new EventStopper(threads, events), "EventStopper");
 		eventStopper.start();
-
 	}
-
 }

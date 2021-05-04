@@ -1,6 +1,7 @@
 package eventhandler;
 
 import java.util.Queue;
+import java.util.concurrent.TimeUnit; //use only for demonstration
 
 import eventqueue.enteties.impl.MyEvent;
 
@@ -20,6 +21,7 @@ public class EventExec implements Runnable {
 					MyEvent event = events.poll();
 					try {
 						event.execute();
+						TimeUnit.SECONDS.sleep(1);
 						System.out.println();
 					} catch (InterruptedException e) {
 						System.out.println("Execute error!");
